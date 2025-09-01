@@ -3,6 +3,7 @@ name = "robot"
 version = "0.1.0"
 dependencies = [
     "pybullet",
+    "pymodbus==2.5.3",
 ]
 
 requires-python = ">=3.8,<3.12"
