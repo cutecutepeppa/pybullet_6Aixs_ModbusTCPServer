@@ -1,0 +1,8 @@
+[project]
+name = "robot"
+version = "0.1.0"
+dependencies = [
+    "pybullet",
+]
+
+requires-python = ">=3.8,<3.12"
