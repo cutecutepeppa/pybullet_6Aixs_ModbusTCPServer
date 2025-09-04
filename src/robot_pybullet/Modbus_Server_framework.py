@@ -12,6 +12,7 @@ import threading
 from pymodbus.server.sync import StartTcpServer
 from pymodbus.datastore import (ModbusSlaveContext, ModbusServerContext, ModbusSequentialDataBlock)
 
+
 # ---------------- 基本參數 ----------------
 HOST = "0.0.0.0"   # ip客製化：Server 監聽 IP
 PORT = 502        # port客製化：502 需權限；建議先用 5020
@@ -63,13 +64,21 @@ def start(host: str = HOST, port: int = PORT):
         _server_thread.start()
         _server_started = True
 
-def get_latest(mode="dint"):
+def get_latest(modes=None):
     """
-    讀取 HR[1633,1634] → 回傳指定型別的值
-    mode: "dint" | "udint" | "float"
+    讀取 HR → 回傳指定型別的值
+    modes: tuple/list，指定每個通道的型別，例如 ("dint","dint","float")
+    如果沒給，預設三個都是 "dint"
     """
-    regs = _context[UNIT_ID].getValues(3, START_ADDR, count=2)  # FC=3 Holding
-    if len(regs) < 2:
-        return None
-    low, high = regs[0], regs[1]
-    return decode_words(low, high, mode=mode, big_endian=BIG_ENDIAN)
+    if modes is None:
+        modes = ("dint", "dint", "dint")   # 預設值
+
+    regs_1 = _context[UNIT_ID].getValues(3, 1633, count=2)
+    regs_2 = _context[UNIT_ID].getValues(3, 1635, count=2)
+    regs_3 = _context[UNIT_ID].getValues(3, 1637, count=2)
+
+    val1 = decode_words(regs_1[0], regs_1[1], mode=modes[0], big_endian=BIG_ENDIAN)
+    val2 = decode_words(regs_2[0], regs_2[1], mode=modes[1], big_endian=BIG_ENDIAN)
+    val3 = decode_words(regs_3[0], regs_3[1], mode=modes[2], big_endian=BIG_ENDIAN)
+
+    return (val1, val2, val3)
