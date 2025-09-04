@@ -1,0 +1,10 @@
+Metadata-Version: 2.4
+Name: robot
+Version: 0.1.0
+Summary: Fanuc 6-axis robot with ModbusTCP integration in PyBullet
+Requires-Python: <3.12,>=3.8
+Requires-Dist: numpy>=1.24.4
+Requires-Dist: pybullet
+Requires-Dist: pymodbus==2.5.3
+Requires-Dist: pytest>=8.3.5
+Requires-Dist: xacro>=2.1.1

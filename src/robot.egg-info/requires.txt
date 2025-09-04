@@ -1,0 +1,5 @@
+numpy>=1.24.4
+pybullet
+pymodbus==2.5.3
+pytest>=8.3.5
+xacro>=2.1.1

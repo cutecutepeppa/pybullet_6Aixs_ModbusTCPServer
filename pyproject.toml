@@ -1,11 +1,28 @@
 [project]
 name = "robot"
 version = "0.1.0"
+description = "Fanuc 6-axis robot with ModbusTCP integration in PyBullet"
+requires-python = ">=3.8,<3.12"
+
 dependencies = [
     "numpy>=1.24.4",
     "pybullet",
     "pymodbus==2.5.3",
+    "pytest>=8.3.5",
     "xacro>=2.1.1",
 ]
 
-requires-python = ">=3.8,<3.12"
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+##單元測試
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-q -ra"
+testpaths = ["tests"]
+filterwarnings = [
+    "ignore::UserWarning",
+]
